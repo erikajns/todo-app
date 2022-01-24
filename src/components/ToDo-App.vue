@@ -14,15 +14,18 @@ export default {
   name: "toDoApp",
   data() {
     return {
-      task: '',
+      task: "",
       taskArray: [],
-    }
+    };
   },
   methods: {
     addTaskArray(data) {
       this.task = data;
-      this.taskArray.push(this.task);
-    }
+      this.taskArray.push({
+        task: this.task,
+        status: "To Do",
+      });
+    },
   },
 };
 </script>
