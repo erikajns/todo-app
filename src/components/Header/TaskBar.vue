@@ -4,7 +4,10 @@
       <font-awesome-icon :icon="['fa', 'plus']" />
     </button>
     <div class="task-bar" v-if="showBar">
-      <button class="task-bar__button task-bar__button--close" @click="closeAdd">
+      <button
+        class="task-bar__button task-bar__button--close"
+        @click="closeAdd"
+      >
         <font-awesome-icon :icon="['fa', 'long-arrow-alt-left']" />
       </button>
       <input
@@ -45,6 +48,7 @@ export default {
     onWritten() {
       this.$emit("onWritten", this.task);
       this.showBar = false;
+      this.task = '';
     },
     onWrittenEnter(e) {
       if (e.key == "Enter") {
@@ -72,9 +76,9 @@ export default {
 .task-bar__input {
   appearance: none;
   background: none;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.945);
   border: none;
-  border-radius: 0 16px 0 16px;
+  border-radius: 0 0 0 16px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
   color: #313131;
   display: block;
@@ -87,16 +91,14 @@ export default {
 
 .task-bar__input:focus {
   background-color: rgba(255, 255, 255, 0.75);
-  border-radius: 16px 0 16px 0;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
 }
 
 .task-bar__submit {
   color: white;
   background: blueviolet;
-  border-radius: 16px;
+  border-radius: 0 16px 0 0;
   font-size: 20px;
-  margin-left: 10px;
   padding: 15px 25px;
 }
 
@@ -105,6 +107,6 @@ export default {
 }
 
 .task-bar__button--close svg {
-    background-color: blueviolet !important;
+  background-color: blueviolet !important;
 }
 </style>

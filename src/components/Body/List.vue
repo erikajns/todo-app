@@ -1,19 +1,20 @@
 <template>
   <div class="list-wrap">
-    <div class="list-wrap__default-message " v-if="this.emptyArray">
+    <div class="list-wrap__default-message" v-if="this.emptyArray">
       <span class="list-wrap__default-message-icon"
         ><font-awesome-icon :icon="['fa', 'exclamation']"
       /></span>
       <h1>HEY THIS IS EMPTY!</h1>
       <p>
-        Hello there, your To-do List for today is empty. Click on the "+" icon to
-        add a new task in your qeue.
+        Hello there, your To-do List for today is empty. Click on the "+" icon
+        to add a new task in your qeue.
       </p>
       <p>
         <b>Instructions: </b> Once you add a new task, to change its status
         click on the status word. There are 3 different status: To-Do (the
         default), In-Progress, and Done.
       </p>
+      <p>Or when you are done, just click the check to set a task as Done</p>
     </div>
     <table v-if="!this.emptyArray">
       <thead>
@@ -52,8 +53,8 @@
             </div>
           </td>
           <td>
-            <div class="list-item__edit">
-              <font-awesome-icon :icon="['fa', 'pen']" />
+            <div class="list-item__done" @click="doneTask(index)">
+              <font-awesome-icon :icon="['fa', 'check']" />
             </div>
           </td>
         </tr>
@@ -65,11 +66,11 @@
 <script>
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { faExclamation } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faTrashAlt);
-library.add(faPen);
+library.add(faCheck);
 library.add(faExclamation);
 
 export default {
@@ -96,6 +97,9 @@ export default {
       let newIndex = this.statusArray.indexOf(this.newTaskArray[index].status);
       if (++newIndex > 2) newIndex = 0;
       this.newTaskArray[index].status = this.statusArray[newIndex];
+    },
+    doneTask(index) {
+      this.newTaskArray[index].status = this.statusArray[2];
     },
   },
   watch: {
@@ -134,14 +138,23 @@ th {
 table,
 th,
 td {
-  border: 1px solid black;
-  border-collapse: collapse;
   padding: 10px;
 }
 
 table {
   margin: 0 10px;
 }
+
+ table {
+        border-collapse: collapse;
+        border-radius: 3px;
+        border-style: hidden;
+        box-shadow: 0 0 0 1px #ccc;
+    }
+
+    td {
+        border: 1px solid #ccc;
+    }
 
 .list-item__delete,
 .list-item__edit,
@@ -175,5 +188,16 @@ table {
 
 .list-wrap__default-message {
   margin: 15px 20px;
+  max-width: 80%;
+}
+
+.list-wrap__default-message p {
+  text-align: left;
+}
+
+@media only screen and (min-width: 900px) {
+  .list-wrap__default-message {
+    max-width: 40%;
+  }
 }
 </style>
