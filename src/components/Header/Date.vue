@@ -5,18 +5,14 @@
       <p class="header-date__day">{{ currentDateTime() }}</p>
     </div>
     <div class="header-add-task">
-      <task-bar @onWritten="addTask"></task-bar>
+      <task-bar @onWritten="addTask" @onWrittenEnter="addTask"></task-bar>
     </div>
   </div>
 </template>
 
 <script>
 import moment from "moment";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import TaskBar from "./TaskBar.vue";
-
-library.add(faPlus);
 
 export default {
   components: { TaskBar },
@@ -81,7 +77,6 @@ export default {
 
 .header-add-task button {
   cursor: pointer;
-  background: none;
   border: none;
   outline: none;
 }
