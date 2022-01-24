@@ -1,12 +1,27 @@
 <template>
     <div>
-        Here Goes The List
+        Task: {{this.newTaskArray}}
     </div>
 </template>
 
 <script>
     export default {
         name: "list",
+        props: {
+            newTaskArray: {
+                type: Array,
+                default() {
+                    return {}
+                } 
+            },
+        },
+        data() {
+            return {
+                
+            }
+        },
+        methods: {
+        }
     }
 </script>
 

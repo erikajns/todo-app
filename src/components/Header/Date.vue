@@ -31,7 +31,7 @@ export default {
       return moment().format("MMMM Do YYYY");
     },
     addTask(data) {
-        console.log(data);
+        this.$emit("onAddTask", data);
     }
   },
 };

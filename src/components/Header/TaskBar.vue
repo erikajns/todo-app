@@ -22,7 +22,6 @@ export default {
     return {
       showBar: false,
       task: "",
-      taskArray: [],
     };
   },
   methods: {
