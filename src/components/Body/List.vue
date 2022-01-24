@@ -15,8 +15,22 @@
           v-for="(item, index) in this.newTaskArray"
           :key="index"
         >
-          <td>{{ item.task }}</td>
-          <td>{{ item.status }}</td>
+          <td>
+            <span :class="{ finished: item.status === 'Done' }">{{
+              item.task
+            }}</span>
+          </td>
+          <td class="list-item__status" @click="changeStatus(index)">
+            <span
+              :class="{
+                success: item.status === 'Done',
+                warning: item.status === 'In-progress',
+                danger: item.status === 'To-do',
+              }"
+            >
+              {{ item.status }}
+            </span>
+          </td>
           <td>
             <div class="list-item__delete" @click="deleteTask(index)">
               <font-awesome-icon :icon="['fa', 'trash-alt']" />
@@ -51,9 +65,19 @@ export default {
       },
     },
   },
+  data() {
+    return {
+      statusArray: ["To-do", "In-progress", "Done"],
+    };
+  },
   methods: {
     deleteTask(index) {
       this.newTaskArray.splice(index, 1);
+    },
+    changeStatus(index) {
+      let newIndex = this.statusArray.indexOf(this.newTaskArray[index].status);
+      if (++newIndex > 2) newIndex = 0;
+      this.newTaskArray[index].status = this.statusArray[newIndex];
     },
   },
 };
@@ -85,8 +109,33 @@ td {
   padding: 10px;
 }
 
+table {
+  margin: 0 10px;
+}
+
 .list-item__delete,
-.list-item__edit {
+.list-item__edit,
+.list-item__status {
   cursor: pointer;
+}
+
+.list-item__status {
+  width: 120px;
+}
+
+.finished {
+  text-decoration: line-through;
+}
+
+.success {
+  color: green;
+}
+
+.warning {
+  color: darkgoldenrod;
+}
+
+.danger {
+  color: red;
 }
 </style>

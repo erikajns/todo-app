@@ -23,7 +23,7 @@ export default {
       this.task = data;
       this.taskArray.push({
         task: this.task,
-        status: "To Do",
+        status: "To-do",
       });
     },
   },
