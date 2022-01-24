@@ -1,6 +1,21 @@
 <template>
   <div class="list-wrap">
-    <table>
+    <div class="list-wrap__default-message " v-if="this.emptyArray">
+      <span class="list-wrap__default-message-icon"
+        ><font-awesome-icon :icon="['fa', 'exclamation']"
+      /></span>
+      <h1>HEY THIS IS EMPTY!</h1>
+      <p>
+        Hello there, your To-do List for today is empty. Click on the "+" icon to
+        add a new task in your qeue.
+      </p>
+      <p>
+        <b>Instructions: </b> Once you add a new task, to change its status
+        click on the status word. There are 3 different status: To-Do (the
+        default), In-Progress, and Done.
+      </p>
+    </div>
+    <table v-if="!this.emptyArray">
       <thead>
         <tr>
           <th scope="col">Task</th>
@@ -51,9 +66,11 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faExclamation } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faTrashAlt);
 library.add(faPen);
+library.add(faExclamation);
 
 export default {
   name: "list",
@@ -68,6 +85,7 @@ export default {
   data() {
     return {
       statusArray: ["To-do", "In-progress", "Done"],
+      emptyArray: true,
     };
   },
   methods: {
@@ -78,6 +96,18 @@ export default {
       let newIndex = this.statusArray.indexOf(this.newTaskArray[index].status);
       if (++newIndex > 2) newIndex = 0;
       this.newTaskArray[index].status = this.statusArray[newIndex];
+    },
+  },
+  watch: {
+    newTaskArray: {
+      handler() {
+        if (this.newTaskArray == 0) {
+          this.emptyArray = true;
+        } else {
+          this.emptyArray = false;
+        }
+      },
+      deep: true,
     },
   },
 };
@@ -137,5 +167,13 @@ table {
 
 .danger {
   color: red;
+}
+
+.list-wrap__default-message-icon {
+  font-size: 50px;
+}
+
+.list-wrap__default-message {
+  margin: 15px 20px;
 }
 </style>
