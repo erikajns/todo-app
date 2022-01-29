@@ -17,6 +17,7 @@
         placeholder="Enter task..."
         v-model="task"
         @keypress="onWrittenEnter"
+        required
       />
       <button class="task-bar__submit" @click="onWritten">Submit</button>
     </div>
@@ -46,9 +47,13 @@ export default {
       this.showBar = false;
     },
     onWritten() {
-      this.$emit("onWritten", this.task);
-      this.showBar = false;
-      this.task = '';
+      if (this.task) {
+        this.$emit("onWritten", this.task);
+        this.showBar = false;
+        this.task = "";
+      } else {
+        alert("Gotta write a task first!");
+      }
     },
     onWrittenEnter(e) {
       if (e.key == "Enter") {
